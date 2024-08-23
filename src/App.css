@@ -515,6 +515,43 @@ ul {
   color: rgb(129, 162, 253);
   font-family: "Friz Quadrata Std", sans-serif;
 }
+.slider{
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  height: 40px;
+  transition: all 0.5s ease-in-out;
+  width: 100px;
+  border: 2px solid #000000;
+  border-radius: 55px;
+  background-color: #3e3e3f;
+  display: flex;
+  align-items: center;
+ 
+}
+.sun{
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+}
+.moon{
+  z-index: 1;
+  position: absolute;
+  right: 5px;
+}
+.toggle{
+
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  /* transform: translateX(75px); */
+  height: 2.3em;
+  width: 2.3em;
+  background-color: #000000;
+  border-radius: 50%;
+  cursor: pointer;
+
+}
 
 @media (max-width: 1416px) {
   .navbar a {
@@ -1187,3 +1224,4 @@ ul {
     font-size: 13px;
   }
 }
+

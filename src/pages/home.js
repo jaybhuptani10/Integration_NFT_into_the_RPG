@@ -164,131 +164,7 @@ export default function () {
         }
     };
 
-    const validate = async () => {
-        if (!getWalletProvider()) {
-            //   alert("Please connect metamask");
-            toast.error("Wallet is not Connected", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        let namecontract = getContract(nametagNftAddress, contractABI);
-        // console.log("contract", namecontract);
-        if (!namecontract) {
-            //   console.log("contract error");
-            toast.error("contract error", { style: { background: "black" } });
-            setLoading(false);
-            return false;
-        }
-
-        const saleactive = await namecontract.saleIsActive();
-
-        if (!saleactive) {
-            toast.error("Sale is not active currently", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const provider = new ethers.providers.Web3Provider(getWalletProvider());
-
-        const balance = await provider.getBalance(
-            (
-                await getCurrentWalletConnected()
-            ).address
-        );
-
-        const calculated = ethers.utils.formatUnits(balance, 18);
-
-        const mintprice = ethers.utils.formatUnits(
-            await namecontract.getCharacterPrice(characterId),
-            18
-        );
-
-        if (parseFloat(calculated) < parseFloat(mintprice)) {
-            toast.error("Insufficent funds", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const characterSupply = await namecontract.getCharacterSupply(
-            characterId
-        );
-        const characterMinted = await namecontract.getCharacterMinted(
-            characterId
-        );
-
-        if (parseFloat(characterMinted) >= parseFloat(characterSupply)) {
-            toast.error("Maximum Supply of selected Archetype Reached, can not be minted more", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const mintedamount = await namecontract.getMintedAmont(
-            (
-                await getCurrentWalletConnected()
-            ).address
-        );
-        const walletlimit = await namecontract.walletLimit();
-
-        if (parseFloat(mintedamount) >= parseFloat(walletlimit)) {
-            toast.error("Exceeds Personal Walllet Limits", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const totoalsupply = await namecontract.totalSupply();
-        const maxsuppy = await namecontract.MAX_SUPPLY();
-
-        if (parseFloat(totoalsupply) >= parseFloat(maxsuppy)) {
-            toast.error("Exceeds max supply of contract", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const validate = await namecontract.validate(imgName);
-
-        if (!validate[0]) {
-            toast.error("Name Unavailable", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const tokenid = await namecontract.getByName(imgName.toUpperCase());
-
-        if (parseInt(tokenid) !== 0) {
-            toast.error("Character Name is exist", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        const isdenylist = await namecontract.inDenyList(imgName.toUpperCase());
-
-        if (isdenylist) {
-            toast.error("Character Name is in DenyList", {
-                style: { background: "black" },
-            });
-            setLoading(false);
-            return false;
-        }
-
-        return true;
-    };
+    
 
     const srcToFile = (src, fileName, mimeType) => {
         return fetch(src)
@@ -534,11 +410,11 @@ export default function () {
                 break;
         }
     };
-
+    
     return (
-        <div className="home">
+        <div className={`home  `}>
             <Loading className={loading ? "" : "loading_disable"} />
-            <div className="board">
+            <div className="board dark:text-black ">
                 <div className="left">
                     <div
                         className="board-item"
@@ -660,8 +536,9 @@ export default function () {
             </div>
             <div className="button-items">
                 <div className="button-item">
-                    <a href="#">
-                        <p>Tabletop</p>
+                    <a  href="#">
+
+                        <p >Tabletop</p>
                         <span>RPG-Ready</span>
                     </a>
                 </div>
